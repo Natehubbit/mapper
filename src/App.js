@@ -25,7 +25,7 @@ function App() {
     const [radius, setRadius] = useState(500)
 
     function fetchHospitals(){
-      fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/output?hospitals%20in%20accra')
+      fetch('https://www.openstreetmap.org/search?query=hospitals%20in%20ghana%20accra')
       .then(res=>res.json())
       .then(data=>console.log(data))
     }
