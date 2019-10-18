@@ -24,6 +24,12 @@ function App() {
     const [ viewport, setViewport ] = useState(viewportState);
     const [radius, setRadius] = useState(500)
 
+    function fetchHospitals(){
+      fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/output?hospitals%20in%20accra')
+      .then(res=>res.json())
+      .then(data=>console.log(data))
+    }
+
     const handleRadius = (view) => {
       let rad = view.viewState.zoom/13 * 500
       setRadius(rad)
@@ -31,16 +37,16 @@ function App() {
 
     function redraw({project}) {
       
-      return data.map(loc=>{
+      return data.map((loc,i)=>{
         const [cx, cy] = project([loc.coordinates[0],loc.coordinates[1]]);
-        return <circle cx={cx} cy={cy} r={radius} fill="blue" fillOpacity='0.05' strokeWidth='3' stroke='blue' strokeOpacity='0.4' />
+        return <circle key={i} cx={cx} cy={cy} r={radius} fill="blue" fillOpacity='0.05' strokeWidth='3' stroke='blue' strokeOpacity='0.4' />
       })
     }
 
     function redrawPoint({project}) {
-      return data.map(loc=>{
+      return data.map((loc,i)=>{
         const [cx, cy] = project([loc.coordinates[0],loc.coordinates[1]]);
-        return <circle cx={cx} cy={cy} r={5} fill="blue"/>
+        return <circle key={i} cx={cx} cy={cy} r={5} fill="blue"/>
       })
     }
 
@@ -52,6 +58,8 @@ function App() {
         </div>
       )
     }
+
+    fetchHospitals()
 
   return (
     <Map
